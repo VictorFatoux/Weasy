@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Outlook Add-in Dialog</title>
+</head>
+<body>
+    <h1>Enter a Number</h1>
+    <input type="number" id="numberInput" placeholder="Enter a number" />
+    <button id="searchButton">Search</button>
+
+    <script type="text/javascript">
+        // Add click event listener to the search button
+        document.getElementById("searchButton").addEventListener("click", function () {
+            // Get the value from the number input
+            var number = document.getElementById("numberInput").value;
+
+            // Perform your search or other action with the number
+            // You can send the number to your add-in code for further processing
+            // For example, you can use Office.js to interact with Outlook data.
+
+            // Close the dialog box
+            OfficeExtension.ExtensionHelpers.closeDialog(null, { isOnlyMessage: true });
+        });
+    </script>
+</body>
+</html>
+
+<script>
+// Function to open the dialog
+function openDialog() {
+    OfficeExtension.ExtensionHelpers.showDialog({
+        title: "Number Search",
+        width: 30,
+        height: 15,
+        url: '/path/to/dialog.html', // Replace with the actual path
+        displayInIframe: true,
+        requireHTTPs: true,
+        allowConsentPrompt: true,
+        showCloseButton: true,
+    });
+}
+
+// Add a button to open the dialog in your add-in
+Office.context.menu.addMenuItem({
+    id: "openDialogButton",
+    label: "Open Dialog",
+    type: Office.MailboxEnums.ItemType.MessageCompose,
+    enabled: true,
+    onClick: openDialog
+});
+</script>
